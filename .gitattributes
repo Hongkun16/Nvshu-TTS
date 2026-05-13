@@ -1,0 +1,2 @@
+wavs/*.wav filter=lfs diff=lfs merge=lfs -text
+wavs/*.pt filter=lfs diff=lfs merge=lfs -text
