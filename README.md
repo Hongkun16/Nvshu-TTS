@@ -1,120 +1,130 @@
 # Nvshu-TTS Dataset
 
-女书/江永方言文本转语音数据集
+English | [中文](README_CN.md)
 
-## 📁 文件说明
+A text-to-speech (TTS) dataset for Nüshu and the Jiangyong dialect.
 
-### 核心数据文件
+## 📁 File Description
+
+### Core Data Files
 
 #### `metadata_chinese.csv` (73 KB)
-- **行数**: 1,445条记录
-- **格式**: `ID|汉字文本|汉字文本`
-- **用途**: 汉字转录文本，与音频文件一一对应
-- **示例**:
+- **Rows**: 1,445 records
+- **Format**: `ID|Chinese text|Chinese text`
+- **Purpose**: Chinese character transcriptions corresponding one-to-one with the audio files
+- **Example**:
   ```
   p19-2|奉到贵家拜龙门|奉到贵家拜龙门
   p19-4|一日之荣落贵家|一日之荣落贵家
   ```
 
 #### `metadata_ipa.csv` (134 KB)
-- **行数**: 1,445条记录
-- **格式**: `ID|IPA音标|IPA音标`
-- **用途**: 江永方言的IPA国际音标标注
-- **示例**:
+- **Rows**: 1,445 records
+- **Format**: `ID|IPA transcription|IPA transcription`
+- **Purpose**: IPA annotations for the Jiangyong dialect
+- **Example**:
   ```
   p19-2|fang13 lau21 tciang33 kue44 poe21 liang42 mai42|fang13 lau21 tciang33 kue44 poe21 liang42 mai42
   ```
 
 #### `metadata_nvshu.csv` (93 KB)
-- **行数**: 1,445条记录
-- **格式**: `ID|女书标注|女书标注`
-- **用途**: 女书字符标注（古代女性文字）
-- **说明**: 每行对应一条音频文件
+- **Rows**: 1,445 records
+- **Format**: `ID|Nüshu annotation|Nüshu annotation`
+- **Purpose**: Nüshu character annotations, representing an ancient women’s script
+- **Note**: Each row corresponds to one audio file
 
 #### `metadata_ipa_test.csv` (2.7 KB)
-- **行数**: 29条记录
-- **格式**: 测试集ID列表
-- **用途**: 标记用于测试的样本，ID格式如 `p422-353`
+- **Rows**: 29 records
+- **Format**: Test-set ID list
+- **Purpose**: Marks samples used for testing, with IDs such as `p422-353`
 
 #### `full_dataset.xlsx` (91 KB)
-- **格式**: Excel工作簿
-- **用途**: 完整数据集的汇总表，包含所有元数据
-- **内容**: 合并了上述CSV文件的信息
+- **Format**: Excel workbook
+- **Purpose**: A complete summary table of the dataset containing all metadata
+- **Content**: Combines the information from the CSV files listed above
 
-## 🎵 音频文件
+## 🎵 Audio Files
 
-音频文件存储在 `wavs/` 文件夹中（需单独上传）：
-- **总数**: 1,445个音频文件
-- **格式**: `.wav` (WAVE audio, 16 bit mono 22050 Hz)
-- **命名**: `pXXX-X.wav` (对应metadata中的ID)
-- **特征**: `.spec.pt` PyTorch张量文件存储音频的光谱特征
+Audio files are stored in the `wavs/` directory and need to be uploaded separately:
+- **Total**: 1,445 audio files
+- **Format**: `.wav` (WAVE audio, 16-bit mono, 22050 Hz)
+- **Naming**: `pXXX-X.wav`, corresponding to IDs in the metadata files
+- **Features**: `.spec.pt` PyTorch tensor files store the spectral features of the audio
 
-## 📊 数据统计
+## 📊 Dataset Statistics
 
-| 指标 | 数值 |
-|-----|------|
-| 总样本数 | 1,445 |
-| 测试集样本 | 29 |
-| 训练集样本 | ~1,416 |
-| 语言 | 江永方言 |
-| 采样率 | 22050 Hz |
-| 位深 | 16 bit |
-| 声道 | 单声道 (mono) |
+| Metric | Value |
+|--------|-------|
+| Total samples | 1,445 |
+| Test samples | 29 |
+| Training samples | ~1,416 |
+| Language | Jiangyong dialect |
+| Sampling rate | 22050 Hz |
+| Bit depth | 16 bit |
+| Channels | Mono |
 
-## 🏷️ 文件对应关系
+## 🏷️ File Mapping
 
 ```
-音频ID: p19-2
-├── 音频文件: wavs/p19-2.wav
-├── 光谱特征: wavs/p19-2.spec.pt
-├── 汉字: 奉到贵家拜龙门 (metadata_chinese.csv)
-├── IPA标注: fang13 lau21 tciang33 kue44 poe21 liang42 mai42 (metadata_ipa.csv)
-└── 女书标注: [...] (metadata_nvshu.csv)
+Audio ID: p19-2
+├── Audio file: wavs/p19-2.wav
+├── Spectral features: wavs/p19-2.spec.pt
+├── Chinese text: 奉到贵家拜龙门 (metadata_chinese.csv)
+├── IPA annotation: fang13 lau21 tciang33 kue44 poe21 liang42 mai42 (metadata_ipa.csv)
+└── Nüshu annotation: [...] (metadata_nvshu.csv)
 ```
 
-## 🔍 使用说明
+## 🔍 Usage
 
-### 读取CSV数据
+### Reading CSV Data
 ```python
 import pandas as pd
 
-# 读取汉字转录
-chinese_df = pd.read_csv('metadata_chinese.csv', sep='|', header=None, 
-                          names=['id', 'text', 'text_copy'])
+# Read Chinese transcriptions
+chinese_df = pd.read_csv(
+    'metadata_chinese.csv',
+    sep='|',
+    header=None,
+    names=['id', 'text', 'text_copy']
+)
 
-# 读取IPA标注
-ipa_df = pd.read_csv('metadata_ipa.csv', sep='|', header=None, 
-                      names=['id', 'ipa', 'ipa_copy'])
+# Read IPA annotations
+ipa_df = pd.read_csv(
+    'metadata_ipa.csv',
+    sep='|',
+    header=None,
+    names=['id', 'ipa', 'ipa_copy']
+)
 
-# 合并数据
+# Merge data
 data = chinese_df.merge(ipa_df, on='id')
 print(data.head())
 ```
 
-### 访问音频文件
+### Accessing Audio Files
 ```python
 import soundfile as sf
 
-# 读取音频
+# Read audio
 audio, sr = sf.read('wavs/p19-2.wav')
-print(f"采样率: {sr} Hz, 时长: {len(audio)/sr:.2f}s")
+print(f"Sampling rate: {sr} Hz, duration: {len(audio) / sr:.2f}s")
 
-# 读取光谱特征
+# Read spectral features
 import torch
 spec = torch.load('wavs/p19-2.spec.pt')
-print(f"光谱特征形状: {spec.shape}")
+print(f"Spectral feature shape: {spec.shape}")
 ```
 
-## 📝 版本信息
+## 📝 Version Information
 
-- **数据集版本**: Final version (2025)
-- **最后更新**: 2025年9月
-- **数据来源**: 女书字典和江永方言语料库
+- **Dataset version**: Final version (2025)
+- **Last updated**: September 2025
+- **Data sources**: Nüshu dictionary and Jiangyong dialect corpus
 
-## ⚖️ 使用许可
+## ⚖️ License
 
-请查看LICENSE文件了解数据使用条款。
+Please see the LICENSE file for data usage terms.
 
 ---
 
-**说明**: 此数据集用于女书/江永方言语音识别和文本转语音(TTS)研究。
+**Note**: This dataset is intended for research on Nüshu/Jiangyong dialect speech recognition and text-to-speech (TTS).
